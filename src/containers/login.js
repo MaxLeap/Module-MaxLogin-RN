@@ -10,9 +10,13 @@ import { connect } from 'react-redux';
 
 import React, {
   Component,
-  StyleSheet,
   PropTypes
 } from 'react';
+
+import ReactNative, {
+  View,
+  Text
+} from 'react-native';
 
 /**
 * Immutable
@@ -29,19 +33,24 @@ displayPasswordCheckbox: PropTypes.bool,
 onChange: PropTypes.func.required,
 form: PropTypes.instanceOf(Form),
 style: PropTypes.shape({
-  container: View.propTypes.style,
-  inputs: Text.propTypes.style
+container: View.propTypes.style,
+inputs: Text.propTypes.style
 })
 */
 export default class Login extends Component {
-  componentWillReceiveProps(nextProps) {
-    this.props = nextProps;
+  componentWillUnmount() {
+    this.props.actions.cleanup();
   }
 
   _onButtonPress(e) {
     let username = this.props.form.fields.username;
     let password = this.props.form.fields.password;
-    this.props.actions.login(username, password);
+    this.props.actions.login({
+      username,
+      password,
+      onSuccess: this.props.onSuccess,
+      onFailure: this.props.onFailure
+    });
   }
 
   _onChange(value) {
@@ -63,21 +72,28 @@ export default class Login extends Component {
     return (
       <UserComponent
         loginButtonText={'Login'}
-        onButtonPress={e=>{this._onButtonPress(e);}}
-        displayPasswordCheckbox={this.props.displayPasswordCheckbox}
-        onChange={e=>{this._onChange(e);}}
-        form={this.props.form}
-        style={this.props.style}
+        {...this.props}
+        onButtonPress={e=>this._onButtonPress(e)}
+        onChange={e=>this._onChange(e)}
         />
     );
   }
 }
 
+Login.propTypes = {
+  displayPasswordCheckbox: PropTypes.bool,
+  onSuccess: PropTypes.func,
+  onFailure: PropTypes.func,
+  style: PropTypes.shape({
+    container: View.propTypes.style,
+    inputs: Text.propTypes.style
+  })
+};
 
 function mapStateToProps(state) {
-    return {
-      form: state.maxlogin.login
-    };
+  return {
+    form: state.maxlogin.login
+  };
 }
 
 function mapDispatchToProps(dispatch) {

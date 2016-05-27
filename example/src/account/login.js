@@ -11,7 +11,11 @@ export default class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MaxLogin.Login style={styles.account}/>
+        <MaxLogin.Login
+          style={styles.account}
+          onSuccess={user=>{console.log(user); Actions.pop();}}
+          onFailure={err=>console.log(err)}
+          />
       </View>
     );
   }

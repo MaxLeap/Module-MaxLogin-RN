@@ -2,11 +2,10 @@
 
 import Actions from '../actionTypes';
 const {
-  USER_LOGIN,
   USER_LOGIN_REQUEST_START,
   USER_LOGIN_REQUEST_SUCCESS,
   USER_LOGIN_REQUEST_FAILURE,
-  USER_LOGIN_INIT_START,
+  USER_LOGIN_CLEANUP,
   USER_LOGIN_FORMFIELD_CHANGE
 } = Actions;
 
@@ -18,7 +17,7 @@ let initialState = new InitialState();
 
 function status(state=initialState.status, action={}) {
   switch (action.type) {
-    case USER_LOGIN_INIT_START:
+    case USER_LOGIN_CLEANUP:
     case USER_LOGIN_FORMFIELD_CHANGE: {
       return state.setIn(['error'], null);
     }

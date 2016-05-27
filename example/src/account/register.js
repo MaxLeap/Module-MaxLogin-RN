@@ -11,7 +11,11 @@ export default class Register extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <MaxLogin.Register style={styles.account}/>
+        <MaxLogin.Register
+          style={styles.account}
+          onSuccess={user=>Actions.dismiss()}
+          onFailure={err=>console.log(err)}
+          />
       </View>
     );
   }

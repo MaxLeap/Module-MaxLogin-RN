@@ -2,11 +2,10 @@
 
 import Actions from '../actionTypes';
 const {
-  USER_REGISTER,
   USER_REGISTER_REQUEST_START,
   USER_REGISTER_REQUEST_SUCCESS,
   USER_REGISTER_REQUEST_FAILURE,
-  USER_REGISTER_INIT_START,
+  USER_REGISTER_CLEANUP,
   USER_REGISTER_FORMFIELD_CHANGE
 } = Actions;
 
@@ -18,12 +17,12 @@ let initialState = new InitialState();
 
 function status(state=initialState.status, action={}) {
   switch (action.type) {
-    case USER_REGISTER_INIT_START:
+    case USER_REGISTER_CLEANUP:
     case USER_REGISTER_FORMFIELD_CHANGE: {
       return state.setIn(['error'], null);
     }
 
-    case USER_REGISTER_REQUEST_START:{
+    case USER_REGISTER_REQUEST_START: {
       return state.setIn(['isFetching'], true)
                   .setIn(['error'], null);
     }

@@ -5,11 +5,10 @@ import ML, { User } from 'maxleap-react-native';
 
 import Actions from '../actionTypes';
 const {
-  USER_LOGIN,
   USER_LOGIN_REQUEST_START,
   USER_LOGIN_REQUEST_SUCCESS,
   USER_LOGIN_REQUEST_FAILURE,
-  USER_LOGIN_INIT_START,
+  USER_LOGIN_CLEANUP,
   USER_LOGIN_FORMFIELD_CHANGE
 } = Actions;
 
@@ -69,9 +68,9 @@ export function formFieldChange(field, value) {
 }
 
 //模块初始化
-export function moduleInit() {
+export function cleanup() {
   return {
-    type: USER_LOGIN_INIT_START
+    type: USER_LOGIN_CLEANUP
   };
 }
 
@@ -86,7 +85,7 @@ export function moduleInit() {
 * If successful, set the state to logout
 * otherwise, dispatch a failure
 */
-export function login(username, password) {
+export function login({username, password, onSuccess, onFailure}) {
 
   return dispatch => {
     //请求开始
@@ -96,10 +95,16 @@ export function login(username, password) {
     .then(user => {
         // 登录成功
         dispatch(requestSuccess(user));
+        if (onSuccess) {
+          onSuccess(user);
+        }
     })
     .catch((error) => {
       // 登录失败
       dispatch(requestFailure(error));
+      if (onFailure) {
+        onFailure(error);
+      }
     });
   };
 }

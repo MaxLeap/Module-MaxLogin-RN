@@ -58,24 +58,24 @@ export default class UserComponent extends Component {
   constructor(props) {
     super(props);
     this.errorAlert = new ErrorAlert();
-    this.state = {
-      username: this.props.form.fields.username,
-      password: this.props.form.fields.password,
-      showPassword: this.props.form.fields.showPassword
-    };
+    // this.state = {
+    //   username: this.props.form.fields.username,
+    //   password: this.props.form.fields.password,
+    //   showPassword: this.props.form.fields.showPassword
+    // };
   }
 
   /**
   * ### componentWillReceiveProps
   * As the properties are validated they will be set here.
   */
-  componentWillReceiveProps(nextprops) {
-    this.setState({
-      username: nextprops.form.fields.username,
-      password: nextprops.form.fields.password,
-      showPassword: nextprops.form.fields.showPassword
-    });
-  }
+  // componentWillReceiveProps(nextprops) {
+  //   this.setState({
+  //     username: nextprops.form.fields.username,
+  //     password: nextprops.form.fields.password,
+  //     showPassword: nextprops.form.fields.showPassword
+  //   });
+  // }
 
   /**
   * ### onChange
@@ -87,9 +87,7 @@ export default class UserComponent extends Component {
   * *Note* that the fields are validated by the authReducer
   */
   _onChange(value) {
-    this.setState({
-      ...value
-    });
+    // this.setState(value);
     if (this.props.onChange) {
       this.props.onChange(value);
     }
@@ -107,6 +105,11 @@ export default class UserComponent extends Component {
 
     let passwordCheckbox = null;
     let styles = Object.assign({}, styles, this.props.style);
+    let value = {
+      username: this.props.form.fields.username,
+      password: this.props.form.fields.password,
+      showPassword: this.props.form.fields.showPassword
+    };
 
     // display the login / register / change password screens
     this.errorAlert.checkError(status.error);
@@ -118,48 +121,48 @@ export default class UserComponent extends Component {
       passwordCheckbox = (
         <ItemCheckbox
           text="Show Password"
-          checked={this.state.showPassword}
+          checked={this.props.form.fields.showPassword}
           disabled={status.isFetching}
           onCheck={() => this._onChange({showPassword: true})}
           onUncheck={() => this._onChange({showPassword: false})}
-          />);
-        }
-
-        /**
-        * The Form is now defined with the required fields.  Just
-        * surround it with the Header and the navigation messages
-        * Note how the button too is disabled if we're fetching. The
-        * header props are mostly for support of Hot reloading.
-        * See the docs for Header for more info.
-        */
-
-        return (
-          <View style={styles.container}>
-
-            <View style={styles.inputs}>
-              <UserForm form={this.props.form}
-                value={this.state}
-                onChange={val=>this._onChange(val)}/>
-              {passwordCheckbox}
-            </View>
-
-            <FormButton
-              isDisabled={!status.isValid || status.isFetching}
-              onPress={onButtonPress}
-              buttonText={loginButtonText}/>
-          </View>
-        );
-      }
+          />
+      );
     }
 
-    UserComponent.propTypes = {
-      loginButtonText: PropTypes.string.isRequired,
-      onButtonPress: PropTypes.func.isRequired,
-      displayPasswordCheckbox: PropTypes.bool,
-      onChange: PropTypes.func.isRequired,
-      form: PropTypes.any,
-      style: PropTypes.shape({
-        container: View.propTypes.style,
-        inputs: Text.propTypes.style
-      })
-    };
+    /**
+    * The Form is now defined with the required fields.  Just
+    * surround it with the Header and the navigation messages
+    * Note how the button too is disabled if we're fetching. The
+    * header props are mostly for support of Hot reloading.
+    * See the docs for Header for more info.
+    */
+    return (
+      <View style={styles.container}>
+
+        <View style={styles.inputs}>
+          <UserForm form={this.props.form}
+            value={value}
+            onChange={val=>this._onChange(val)}/>
+          {passwordCheckbox}
+        </View>
+
+        <FormButton
+          isDisabled={!status.isValid || status.isFetching}
+          onPress={onButtonPress}
+          buttonText={loginButtonText}/>
+      </View>
+    );
+  }
+}
+
+UserComponent.propTypes = {
+  loginButtonText: PropTypes.string.isRequired,
+  onButtonPress: PropTypes.func.isRequired,
+  displayPasswordCheckbox: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  form: PropTypes.any,
+  style: PropTypes.shape({
+    container: View.propTypes.style,
+    inputs: Text.propTypes.style
+  })
+};

@@ -10,9 +10,9 @@ let status = new Record({
 })();
 
 let fields = new Record({
-  username: 'user11',
+  username: 'User11',
   usernameHasError: false,
-  password: 'user@11',
+  password: 'User@11',
   passwordHasError: false,
   showPassword: false
 })();

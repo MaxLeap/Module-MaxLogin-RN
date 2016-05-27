@@ -5,11 +5,10 @@ import ML, { User } from 'maxleap-react-native';
 
 import Actions from '../actionTypes';
 const {
-  USER_REGISTER,
   USER_REGISTER_REQUEST_START,
   USER_REGISTER_REQUEST_SUCCESS,
   USER_REGISTER_REQUEST_FAILURE,
-  USER_REGISTER_INIT_START,
+  USER_REGISTER_CLEANUP,
   USER_REGISTER_FORMFIELD_CHANGE
 } = Actions;
 
@@ -45,24 +44,23 @@ export function formFieldChange(field,value) {
 }
 
 //模块初始化
-export function moduleInit() {
+export function cleanup() {
   return {
-    type: USER_REGISTER_INIT_START
+    type: USER_REGISTER_CLEANUP
   };
 }
 
 /**
 * ## register
 * @param {string} username - name of user
-* @param {string} email - user's email
 * @param {string} password - user's password
 *
-* Call Parse.register and if good, save the accessToken,
+* Call MLUser.signUp and if good, save the accessToken,
 * set the state to logout and signal success
 *
 * Otherwise, dispatch the error so the user can see
 */
-export function register(username, password, attrs={}) {
+export function register({username, password, attrs, onSuccess, onFailure}) {
 
   return dispatch => {
     //请求开始
@@ -71,9 +69,15 @@ export function register(username, password, attrs={}) {
     User.signUp(username, password, attrs)
     .then(user=>{
       dispatch(requestSuccess(user));
+      if (onSuccess) {
+        onSuccess(user);
+      }
     })
     .catch(err => {
       dispatch(requestFailure(err));
+      if (onFailure) {
+        onFailure(err);
+      }
     });
   };
 }

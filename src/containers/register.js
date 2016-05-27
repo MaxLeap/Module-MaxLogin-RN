@@ -10,9 +10,10 @@ import { connect } from 'react-redux';
 
 import React, {
   Component,
-  StyleSheet,
   PropTypes
 } from 'react';
+
+import ReactNative, { Text, View } from 'react-native';
 
 /**
 * Immutable
@@ -34,14 +35,19 @@ style: PropTypes.shape({
 })
 */
 export default class Register extends Component {
-  componentWillReceiveProps(nextProps) {
-    this.props = nextProps;
+  componentWillUnmount() {
+    this.props.actions.cleanup();
   }
 
   _onButtonPress(e) {
     let username = this.props.form.fields.username;
     let password = this.props.form.fields.password;
-    this.props.actions.register(username, password);
+    this.props.actions.register({
+      username,
+      password,
+      onSuccess:this.props.onRegister,
+      onFailure:this.props.onFailure
+    });
   }
 
   _onChange(value) {
@@ -63,16 +69,23 @@ export default class Register extends Component {
     return (
       <UserComponent
         loginButtonText={'Register'}
+        {...this.props}
         onButtonPress={e=>{this._onButtonPress(e);}}
-        displayPasswordCheckbox={this.props.displayPasswordCheckbox}
-        onChange={e=>{this._onChange(e);}}
-        form={this.props.form}
-        style={this.props.style}
+        onChange={e=>this._onChange(e)}
         />
     );
   }
 }
 
+Register.propTypes = {
+  displayPasswordCheckbox: PropTypes.bool,
+  onSuccess: PropTypes.func,
+  onFailure: PropTypes.func,
+  style: PropTypes.shape({
+    container: View.propTypes.style,
+    inputs: Text.propTypes.style
+  })
+};
 
 function mapStateToProps(state) {
     return {
