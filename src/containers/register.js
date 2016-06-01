@@ -54,13 +54,13 @@ export default class Register extends Component {
     let form = this.props.form;
     let formFieldChange = this.props.actions.formFieldChange;
 
-    if (value.username !== form.username) {
+    if (value.username !== form.fields.username) {
       formFieldChange('username', value.username);
     }
-    if (value.password !== form.password) {
+    if (value.password !== form.fields.password) {
       formFieldChange('password', value.password);
     }
-    if (value.showPassword !== form.showPassword) {
+    if (value.showPassword !== form.fields.showPassword) {
       formFieldChange('showPassword', value.showPassword);
     }
   }
@@ -68,7 +68,7 @@ export default class Register extends Component {
   render() {
     return (
       <UserComponent
-        loginButtonText={'Register'}
+        buttonText={'注册'}
         {...this.props}
         onButtonPress={e=>{this._onButtonPress(e);}}
         onChange={e=>this._onChange(e)}
@@ -80,11 +80,7 @@ export default class Register extends Component {
 Register.propTypes = {
   displayPasswordCheckbox: PropTypes.bool,
   onSuccess: PropTypes.func,
-  onFailure: PropTypes.func,
-  style: PropTypes.shape({
-    container: View.propTypes.style,
-    inputs: Text.propTypes.style
-  })
+  onFailure: PropTypes.func
 };
 
 function mapStateToProps(state) {

@@ -18,7 +18,6 @@ import tcomb from 'tcomb-form-native';
 let Form = tcomb.form.Form;
 
 import textbox from './templates/textbox';
-import formStyle from './stylesheet/formStyle';
 
 export default class UserForm extends Component {
 
@@ -53,7 +52,7 @@ export default class UserForm extends Component {
 
     let options = {
       auto: 'placeholders',
-      stylesheet: formStyle,
+      stylesheet: this.props.formStyle,
       fields: {
         username: {
           label: '用户名',

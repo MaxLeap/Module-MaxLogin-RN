@@ -43,8 +43,8 @@ export default function textbox(locals) {
   let button = null;
   if (locals.help) {
     if (!locals.help.active) {
-      helpBlockStyle = stylesheet.helpBlock.error;
-      buttonTextStyle = stylesheet.helpBlock.textStyle.error;
+      helpBlockStyle = stylesheet.helpBlock.inactive;
+      buttonTextStyle = stylesheet.helpBlock.textStyle.inactive;
     }
     button = (
       <Button style={helpBlockStyle}
@@ -53,13 +53,6 @@ export default function textbox(locals) {
               onPress={e=>locals.help.onPress && locals.help.onPress(locals.path)}>
         {locals.help.text}
       </Button>
-      // {/*<TouchableHighlight style={helpBlockStyle}
-      //                     disabled={locals.help.disabled}
-      //                     activeOpacity={0.5}
-      //                     underlayColor={helpBlockStyle.backgroundColor}
-      //                     onPress={e=>locals.help.onPress && locals.help.onPress(locals.path)}>
-      //   <Text style={buttonTextStyle}>{locals.help.text}</Text>
-      // </TouchableHighlight>*/}
     );
   }
   // let help = locals.help ? <Text style={helpBlockStyle}>{locals.help}</Text> : null;

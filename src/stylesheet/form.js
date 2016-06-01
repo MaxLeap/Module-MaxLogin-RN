@@ -31,6 +31,7 @@ export default {
   textGroup: {
     normal: {
       flex: 1,
+      height: 36,
       flexDirection: 'row',
       alignItems: 'center',
       borderBottomWidth: 0.5,
@@ -38,6 +39,7 @@ export default {
     },
     error: {
       flex: 1,
+      height: 36,
       flexDirection: 'row',
       alignItems: 'center',
       borderBottomWidth: 0.5,
@@ -63,42 +65,38 @@ export default {
     normal: {
       flex: 1,
       color: INPUT_COLOR,
-      fontSize: FONT_SIZE,
-      height: 36,
-      padding: 7
+      fontSize: FONT_SIZE
     },
     // the style applied when a validation error occours
     error: {
       flex: 1,
       color: INPUT_COLOR,
-      fontSize: FONT_SIZE,
-      height: 36,
-      padding: 7
+      fontSize: FONT_SIZE
     },
     // the style applied when the textbox is not editable
     notEditable: {
       flex: 1,
-      fontSize: FONT_SIZE,
-      height: 36,
-      padding: 7,
-      color: INPUT_COLOR
+      color: INPUT_COLOR,
+      fontSize: FONT_SIZE
     }
   },
+  // the style of request smscode button
   helpBlock: {
     normal: {
       justifyContent: 'center',
       backgroundColor: '#ff7700',
       borderRadius: 3,
+      borderColor: '#ff7700',
       marginLeft: 7,
       height: 33,
       paddingLeft: 15,
       paddingRight: 15
     },
-    // the style applied when a validation error occours
-    error: {
+    inactive: {
       justifyContent: 'center',
       backgroundColor: DEFAULT_GRAY_COLOR,
       borderRadius: 3,
+      borderColor: DEFAULT_GRAY_COLOR,
       marginLeft: 7,
       height: 33,
       paddingLeft: 15,
@@ -110,7 +108,7 @@ export default {
         fontSize: FONT_SIZE,
         fontWeight: 'normal',
       },
-      error: {
+      inactive: {
         color: 'white',
         fontSize: FONT_SIZE,
         fontWeight: 'normal',

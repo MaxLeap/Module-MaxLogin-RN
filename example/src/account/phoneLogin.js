@@ -15,6 +15,7 @@ export default class PhoneLogin extends Component {
           style={styles.account}
           onSuccess={user=>{console.log(user); Actions.pop();}}
           onFailure={err=>console.log(err)}
+          waitSeconds={45}
           />
       </View>
     );

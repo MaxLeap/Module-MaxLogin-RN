@@ -27,8 +27,8 @@ export default function formValidation (form) {
   !form.fields.usernameError &&
   !form.fields.emailError &&
   !form.fields.passwordError &&
-  !form.fields.phoneNumberError &&
-  !form.fields.smscodeError) {
+  form.fields.phoneNumberIsValid &&
+  form.fields.smscodeIsValid) {
     return form.setIn(['status','isValid'],true);
   } else {
     return form.setIn(['status','isValid'],false);

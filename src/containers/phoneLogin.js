@@ -27,6 +27,8 @@ import Immutable, { Map } from 'immutable';
 import actions from '../actions';
 import UserComponent from '../components/UserComponent';
 
+const DEFAULT_WAIT_TIME = 60;
+
 /*
 loginButtonText: PropTypes.string.required,
 onButtonPress: PropTypes.func.required,
@@ -61,10 +63,10 @@ export default class PhoneLogin extends Component {
     let form = this.props.form;
     let formFieldChange = this.props.actions.formFieldChange;
 
-    if (value.phoneNumber !== form.phoneNumber) {
+    if (value.phoneNumber !== form.fields.phoneNumber) {
       formFieldChange('phoneNumber', value.phoneNumber);
     }
-    if (value.smscode !== form.smscode) {
+    if (value.smscode !== form.fields.smscode) {
       formFieldChange('smscode', value.smscode);
     }
   }
@@ -101,7 +103,8 @@ export default class PhoneLogin extends Component {
         onSuccess: this.props.onSmsRequestSuccess,
         onFailure: this.props.onSmsRequestFailure
       });
-      this.props.actions.counterStart(10);
+      let waitSeconds = this.props.waitSeconds || DEFAULT_WAIT_TIME;
+      this.props.actions.counterStart(waitSeconds);
       this.timer = setInterval(()=>{
         this.props.actions.countdown(1);
         if (this.props.form.fields.countValue <= 0) {
@@ -114,7 +117,7 @@ export default class PhoneLogin extends Component {
   render() {
     return (
       <UserComponent
-        loginButtonText={'验证并登录'}
+        buttonText={'验证并登录'}
         {...this.props}
         onButtonPress={e=>this._onButtonPress(e)}
         onChange={e=>this._onChange(e)}
@@ -130,10 +133,7 @@ PhoneLogin.propTypes = {
   onSmsRequestFailure: PropTypes.func,
   onSuccess: PropTypes.func,
   onFailure: PropTypes.func,
-  style: PropTypes.shape({
-    container: View.propTypes.style,
-    inputs: Text.propTypes.style
-  })
+  waitSeconds: PropTypes.number // default is 60s
 };
 
 function mapStateToProps(state) {

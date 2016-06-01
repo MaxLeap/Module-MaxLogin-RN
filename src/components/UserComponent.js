@@ -21,6 +21,8 @@ import UserForm from './UserForm';
 */
 import ItemCheckbox from './ItemCheckbox';
 
+import stylesheet from '../stylesheet';
+
 /**
 * The necessary React components
 */
@@ -33,39 +35,6 @@ import ReactNative, {
   Text,
   View
 } from 'react-native';
-
-/**
-* ## Styles
-*/
-const defaultStyle = {
-  container: {
-    flexDirection: 'column',
-    flex: 1
-  },
-  inputs: {
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 10,
-    marginRight: 10
-  },
-  button: {
-    normal: {
-      marginTop: 20,
-      borderRadius: 3,
-      backgroundColor: '#27ae60',
-      borderColor: '#27ae60'
-    },
-    disabled: {
-      marginTop: 20,
-      borderRadius: 3,
-      backgroundColor: '#8f8f8f',
-      borderColor: '#8f8f8f'
-    },
-    textStyle: {
-      color: 'white'
-    }
-  }
-};
 
 export default class UserComponent extends Component {
   /**
@@ -89,13 +58,13 @@ export default class UserComponent extends Component {
   * Setup some default presentations and render
   */
   render() {
-    let loginButtonText = this.props.loginButtonText;
+    let buttonText = this.props.buttonText;
     let onButtonPress = this.props.onButtonPress;
     let displayPasswordCheckbox = this.props.displayPasswordCheckbox;
     let status = this.props.form.status;
 
+    let styles = Object.assign({}, stylesheet, this.props.style);
     let passwordCheckbox = null;
-    let styles = Object.assign({}, defaultStyle, this.props.style);
 
     // display the login / register / change password screens
     // this.errorAlert.checkError(status.error, ()=>{this.props.actions.cleanup();});
@@ -130,6 +99,7 @@ export default class UserComponent extends Component {
             value={this.props.form.fields.toJS()}
             onChange={val=>this._onChange(val)}
             onFieldAccessoryPress={this.props.onFieldAccessoryPress}
+            formStyle={styles.formStyle}
             />
           {passwordCheckbox}
         </View>
@@ -139,7 +109,7 @@ export default class UserComponent extends Component {
                 textStyle={styles.button.textStyle}
                 isDisabled={!status.isValid || status.isFetching}
                 onPress={onButtonPress}>
-          {loginButtonText}
+          {buttonText}
         </Button>
       </View>
     );
@@ -147,7 +117,7 @@ export default class UserComponent extends Component {
 }
 
 UserComponent.propTypes = {
-  loginButtonText: PropTypes.string.isRequired,
+  buttonText: PropTypes.string.isRequired,
   onButtonPress: PropTypes.func.isRequired,
   displayPasswordCheckbox: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
@@ -159,6 +129,7 @@ UserComponent.propTypes = {
       normal: View.propTypes.style,
       disabled: Text.propTypes.style,
       textStyle: Text.propTypes.style
-    })
+    }),
+    formStyle: PropTypes.any
   })
 };

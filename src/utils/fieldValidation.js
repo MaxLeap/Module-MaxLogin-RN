@@ -128,7 +128,7 @@ export default function fieldValidation(state, {payload:{field, value}}) {
     }
 
     case('smscode'): {
-      let isValid = value && value.length === 6;
+      let isValid = value && (value.length === 6);
       return state.setIn(['smscodeIsValid'], isValid);
     }
 
