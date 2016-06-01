@@ -140,39 +140,35 @@ var ItemCheckbox = React.createClass({
     if (this.props.disabled) {
       iconName = this.props.checked ? this.props.icon_check : this.props.icon_open;
       return (
-        <View style={this.props.style}>
-          <TouchableWithoutFeedback>
-            <View style={{
-                flexDirection: 'row',
-                flex:1
-              }}>
-              <Icon
-                name={iconName}
-                size={20}
-                />
-              <Text> {this.props.text}</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
+        <TouchableWithoutFeedback style={this.props.style}>
+          <View style={{
+              flexDirection: 'row',
+              flex:1
+            }}>
+            <Icon
+              name={iconName}
+              size={20}
+              />
+            <Text> {this.props.text}</Text>
+          </View>
+        </TouchableWithoutFeedback>
       );
     } else {
       return(
-        <View style={this.props.style}>
-          <TouchableHighlight
-            onPress={this._completeProgress}
-            >
-            <View style={{
-                flexDirection: 'row',
-                flex:1
-              }}>
-              <Icon
-                name={iconName}
-                size={20}
-                />
-              <Text> {this.props.text}</Text>
-            </View>
-          </TouchableHighlight>
-        </View>
+        <TouchableHighlight style={this.props.style}
+                            onPress={this._completeProgress}
+                            underlayColor={this.props.backgroundColor}>
+          <View style={{
+              flexDirection: 'row',
+              flex:1
+            }}>
+            <Icon
+              name={iconName}
+              size={20}
+              />
+            <Text> {this.props.text}</Text>
+          </View>
+        </TouchableHighlight>
       );
     }
   }
