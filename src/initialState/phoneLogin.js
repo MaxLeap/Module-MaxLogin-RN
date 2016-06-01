@@ -3,18 +3,19 @@
 import Immutable, { Record } from 'immutable';
 
 let status = new Record({
-  disabled: false,
+  active: false,
   error: null,
-  isValid: true,
+  isValid: false,
   isFetching: false
 })();
 
 let fields = new Record({
-  username: 'User11',
-  usernameError: null,
-  password: 'User@11',
-  passwordError: null,
-  showPassword: false
+  phoneNumber: '',
+  phoneNumberIsValid: false,
+  smscode: '',
+  smscodeIsValid: false,
+  countValue: 0,
+  isCounting: false
 })();
 
 const Form = Record({

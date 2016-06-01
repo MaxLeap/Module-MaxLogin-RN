@@ -22,9 +22,13 @@ export default function formValidation (form) {
   if (form.fields.username !== '' &&
   form.fields.email !== '' &&
   form.fields.password !== '' &&
-  !form.fields.usernameHasError &&
-  !form.fields.emailHasError &&
-  !form.fields.passwordHasError) {
+  form.fields.phoneNumber !== '' &&
+  form.fields.smscode !== '' &&
+  !form.fields.usernameError &&
+  !form.fields.emailError &&
+  !form.fields.passwordError &&
+  !form.fields.phoneNumberError &&
+  !form.fields.smscodeError) {
     return form.setIn(['status','isValid'],true);
   } else {
     return form.setIn(['status','isValid'],false);

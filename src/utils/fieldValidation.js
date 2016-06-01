@@ -13,7 +13,6 @@
 *
 */
 import validate from 'validate.js';
-import _ from 'lodash';
 
 /**
 * ## Email validation setup
@@ -35,7 +34,7 @@ const usernameConstraints = {
     format: {
       pattern: usernamePattern,
       flags: 'i',
-      message: "must have 6-12 numbers, letters or special characters"
+      message: "Must have 6-12 numbers, letters or special characters"
     }
   }
 };
@@ -50,19 +49,27 @@ const passwordConstraints = {
     format: {
       pattern: passwordPattern,
       flags: "i",
-      message: "have at least a number and a special character," + " and between 6-12 in length"
+      message: "Must have at least a number and a special character," + " and between 6-12 in length"
     }
   }
 };
 
+const phoneNumberPattern =  /^1[0-9]{10}$/;
+const phoneNumberConstraints = {
+  phoneNumber: {
+    format: {
+      pattern: phoneNumberPattern,
+      flags: "i"
+    }
+  }
+};
 
 /**
 * ## Field Validation
 * @param {Object} state Redux state
 * @param {Object} action type & payload
 */
-export default function fieldValidation(state, action) {
-  const {field, value} = action.payload;
+export default function fieldValidation(state, {payload:{field, value}}) {
 
   switch(field) {
     /**
@@ -70,11 +77,11 @@ export default function fieldValidation(state, action) {
     * set the form field error
     */
     case('username'): {
-      let validUsername  = _.isUndefined(validate({username: value}, usernameConstraints));
+      let validUsername  = validate({username: value}, usernameConstraints) === undefined;
       if (validUsername) {
-        return state.setIn(['usernameHasError'], false);
+        return state.setIn(['usernameError'], null);
       } else {
-        return state.setIn(['usernameHasError'], true);
+        return state.setIn(['usernameError'], usernameConstraints.username.format.message);
       }
     }
     break;
@@ -84,11 +91,11 @@ export default function fieldValidation(state, action) {
     * set the form field error
     */
     case('email'): {
-      let validEmail  = _.isUndefined(validate({from: value}, emailConstraints));
+      let validEmail  = validate({from: value}, emailConstraints) === undefined;
       if (validEmail) {
-        return state.setIn(['emailHasError'], false);
+        return state.setIn(['emailError'], null);
       } else {
-        return state.setIn(['emailHasError'], true);
+        return state.setIn(['emailError'], 'Invalid email address.');
       }
     }
     break;
@@ -98,14 +105,13 @@ export default function fieldValidation(state, action) {
     * set the form field error
     */
     case('password'): {
-      let validPassword = _.isUndefined(validate({password: value}, passwordConstraints));
+      let validPassword = validate({password: value}, passwordConstraints) === undefined;
       if (validPassword) {
-        return state.setIn(['passwordHasError'], false);
+        return state.setIn(['passwordError'], null);
       } else {
-        return state.setIn(['passwordHasError'], true);
+        return state.setIn(['passwordError'], passwordConstraints.password.format.message);
       }
     }
-
     break;
 
     /**
@@ -115,6 +121,19 @@ export default function fieldValidation(state, action) {
     case('showPassword'): {
       return state.setIn(['showPassword'], value);
     }
+
+    case('phoneNumber'): {
+      let isValid = value && value.length>0 && validate({'phoneNumber': value}, phoneNumberConstraints) === undefined;
+      return state.setIn(['phoneNumberIsValid'], isValid);
+    }
+
+    case('smscode'): {
+      let isValid = value && value.length === 6;
+      return state.setIn(['smscodeIsValid'], isValid);
+    }
+
+    default: {
+      return state;
+    }
   }
-  return state;
 }

@@ -1,22 +1,15 @@
-'use strict'
+'use strict';
 
-import _ from 'lodash';
 import ML, { User } from 'maxleap-react-native';
 
-import Actions from '../actionTypes';
+import ActionTypes from '../actionTypes';
 const {
-  USER_LOGIN_REQUEST_START,
-  USER_LOGIN_REQUEST_SUCCESS,
-  USER_LOGIN_REQUEST_FAILURE,
-  USER_LOGIN_CLEANUP,
-  USER_LOGIN_FORMFIELD_CHANGE
-} = Actions;
-
-
-
-// const ApiFactory = require('../../../../services/api').default
-
-// import { Actions as routerActions }  from 'react-native-router-flux'
+  LOGIN_REQUEST_START,
+  LOGIN_REQUEST_SUCCESS,
+  LOGIN_REQUEST_FAILURE,
+  LOGIN_CLEANUP,
+  LOGIN_FORMFIELD_CHANGE
+} = ActionTypes;
 
 /**
 * ## Login
@@ -41,20 +34,20 @@ const {
 */
 function requestStart() {
   return {
-    type: USER_LOGIN_REQUEST_START
+    type: LOGIN_REQUEST_START
   };
 }
 
 function requestSuccess(json) {
   return {
-    type: USER_LOGIN_REQUEST_SUCCESS,
+    type: LOGIN_REQUEST_SUCCESS,
     payload: json
   };
 }
 
 function requestFailure(error) {
   return {
-    type: USER_LOGIN_REQUEST_FAILURE,
+    type: LOGIN_REQUEST_FAILURE,
     payload: error
   };
 }
@@ -62,7 +55,7 @@ function requestFailure(error) {
 //表单字段更新
 export function formFieldChange(field, value) {
   return {
-    type: USER_LOGIN_FORMFIELD_CHANGE,
+    type: LOGIN_FORMFIELD_CHANGE,
     payload: {field, value}
   };
 }
@@ -70,7 +63,7 @@ export function formFieldChange(field, value) {
 //模块初始化
 export function cleanup() {
   return {
-    type: USER_LOGIN_CLEANUP
+    type: LOGIN_CLEANUP
   };
 }
 

@@ -2,11 +2,11 @@
 
 import Actions from '../actionTypes';
 const {
-  USER_LOGIN_REQUEST_START,
-  USER_LOGIN_REQUEST_SUCCESS,
-  USER_LOGIN_REQUEST_FAILURE,
-  USER_LOGIN_CLEANUP,
-  USER_LOGIN_FORMFIELD_CHANGE
+  LOGIN_REQUEST_START,
+  LOGIN_REQUEST_SUCCESS,
+  LOGIN_REQUEST_FAILURE,
+  LOGIN_CLEANUP,
+  LOGIN_FORMFIELD_CHANGE
 } = Actions;
 
 import InitialState from '../initialState/login';
@@ -17,21 +17,21 @@ let initialState = new InitialState();
 
 function status(state=initialState.status, action={}) {
   switch (action.type) {
-    case USER_LOGIN_CLEANUP:
-    case USER_LOGIN_FORMFIELD_CHANGE: {
+    case LOGIN_CLEANUP:
+    case LOGIN_FORMFIELD_CHANGE: {
       return state.setIn(['error'], null);
     }
 
-    case USER_LOGIN_REQUEST_START:{
+    case LOGIN_REQUEST_START:{
       return state.setIn(['isFetching'], true)
                   .setIn(['error'], null);
     }
 
-    case USER_LOGIN_REQUEST_SUCCESS:{
+    case LOGIN_REQUEST_SUCCESS:{
       return state.setIn(['isFetching'], false);
     }
 
-    case USER_LOGIN_REQUEST_FAILURE:{
+    case LOGIN_REQUEST_FAILURE:{
       return state.setIn(['isFetching'], false)
                   .setIn(['error'], action.payload);
     }
@@ -43,7 +43,7 @@ function status(state=initialState.status, action={}) {
 
 function fields(state=initialState.fields, action={}) {
   switch (action.type) {
-    case USER_LOGIN_FORMFIELD_CHANGE: {
+    case LOGIN_FORMFIELD_CHANGE: {
       const {field, value} = action.payload;
       let nextState =  state.setIn([field], value);
       return fieldValidation(nextState, action);

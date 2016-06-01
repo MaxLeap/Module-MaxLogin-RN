@@ -19,6 +19,13 @@ export default class Root extends React.Component {
             Login
           </Text>
         </TouchableHighlight>
+        <TouchableHighlight style={{height: 50, justifyContent: 'center', backgroundColor: '#D0ADBD'}}
+                            onPress={e=>Actions.other()}
+                            underlayColor={'#32BE78'}>
+          <Text style={{textAlign: 'center', fontSize: 20}}>
+            Phone Login
+          </Text>
+        </TouchableHighlight>
       </View>
     );
   }

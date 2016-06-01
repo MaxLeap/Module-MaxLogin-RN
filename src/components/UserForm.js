@@ -9,7 +9,7 @@
 
 
 import React, { PropTypes, Component } from 'react';
-import ReactNative from 'react-native';
+import ReactNative, { TextInput } from 'react-native';
 
 /**
 *  The fantastic little form library
@@ -17,7 +17,28 @@ import ReactNative from 'react-native';
 import tcomb from 'tcomb-form-native';
 let Form = tcomb.form.Form;
 
+import textbox from './templates/textbox';
+import formStyle from './stylesheet/formStyle';
+
 export default class UserForm extends Component {
+
+  formType() {
+    let fields = this.props.form.fields;
+    let struct = {};
+    if (fields.username !== undefined) {
+      struct.username = tcomb.String;
+    }
+    if (fields.password !== undefined) {
+      struct.password = tcomb.String;
+    }
+    if (fields.phoneNumber !== undefined) {
+      struct.phoneNumber = tcomb.String;
+    }
+    if (fields.smscode !== undefined) {
+      struct.smscode = tcomb.String;
+    }
+    return tcomb.struct(struct);
+  }
 
   /**
   * ## render
@@ -26,61 +47,72 @@ export default class UserForm extends Component {
   *
   */
   render() {
+    let status = this.props.form.status;
+    let fields = this.props.form.fields;
+    let editable = !status.isFetching;
+
     let options = {
       auto: 'placeholders',
-      fields: {}
+      stylesheet: formStyle,
+      fields: {
+        username: {
+          label: '用户名',
+          placeholder: '请输入用户名',
+          autoCorrect: false,
+          editable,
+          hasError: fields.usernameError,
+          error: fields.usernameError,
+          template: textbox,
+          clearButtonMode: 'while-editing'
+        },
+        password: {
+          label: '密码',
+          placeholder: '请输入密码',
+          secureTextEntry: !fields.showPassword,
+          editable,
+          hasError: fields.passwordError,
+          error: fields.passwordError,
+          template: textbox,
+          clearButtonMode: 'while-editing'
+          // error: 'Must have 6-12 characters with at least 1 number and 1 special character'
+        },
+        phoneNumber: {
+          label: '手机号',
+          placeholder: '请输入手机号',
+          keyboardType: 'numeric',
+          editable,
+          hasError: !fields.phoneNumberIsValid,
+          template: textbox,
+          clearButtonMode: 'while-editing'
+        },
+        smscode: {
+          label: '验证码',
+          placeholder: '请输入验证码',
+          editable,
+          hasError: !fields.smscodeIsValid,
+          help: {
+            text: fields.isCounting ? fields.countValue + 's' : '获取验证码',
+            active: fields.phoneNumberIsValid && !fields.isCounting,
+            disabled: fields.isCounting,
+            onPress: this.props.onFieldAccessoryPress
+          },
+          template: textbox,
+          clearButtonMode: 'while-editing'
+        }
+      }
     };
-
-    let username = {
-      label: 'Username',
-      keyboardType: 'email-address',
-      editable: !this.props.form.isFetching,
-      hasError: this.props.form.fields.usernameHasError,
-      error: 'Please enter valid username'
-    };
-
-    let secureTextEntry = !this.props.form.fields.showPassword;
-
-    let password = {
-      label: 'Password',
-      maxLength: 12,
-      secureTextEntry: secureTextEntry,
-      editable: !this.props.form.isFetching,
-      hasError: this.props.form.fields.passwordHasError,
-      error: 'Must have 6-12 characters with at least 1 number and 1 special character'
-    };
-
-    let userForm = tcomb.struct({
-      username: tcomb.String,
-      password: tcomb.String
-    });
-    options.fields.username = username;
-    options.fields.password = password;
 
     /**
     * ### Return
     * returns the Form component with the correct structures
     */
     return (
-      <Form ref="form"
-        type={userForm}
+      <Form
+        {...this.props}
+        ref="form"
+        type={this.formType()}
         options={options}
-        value={this.props.value}
-        onChange={this.props.onChange}
         />
     );
   }
 }
-
-/**
-* ## LoginForm class
-*
-* * form: the properties to set into the UI form
-* * value: the values to set in the input fields
-* * onChange: function to call when user enters text
-*/
-UserForm.propTypes = {
-  form: PropTypes.object,
-  value: PropTypes.object,
-  onChange: PropTypes.func
-};

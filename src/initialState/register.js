@@ -11,9 +11,9 @@ let status = new Record({
 
 let fields = new Record({
   username: 'User11',
-  usernameHasError: false,
+  usernameError: null,
   password: 'User@11',
-  passwordHasError: false,
+  passwordError: null,
   showPassword: false
 })();
 

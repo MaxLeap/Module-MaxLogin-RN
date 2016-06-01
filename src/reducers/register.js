@@ -2,11 +2,11 @@
 
 import Actions from '../actionTypes';
 const {
-  USER_REGISTER_REQUEST_START,
-  USER_REGISTER_REQUEST_SUCCESS,
-  USER_REGISTER_REQUEST_FAILURE,
-  USER_REGISTER_CLEANUP,
-  USER_REGISTER_FORMFIELD_CHANGE
+  REGISTER_REQUEST_START,
+  REGISTER_REQUEST_SUCCESS,
+  REGISTER_REQUEST_FAILURE,
+  REGISTER_CLEANUP,
+  REGISTER_FORMFIELD_CHANGE
 } = Actions;
 
 import InitialState from '../initialState/register';
@@ -17,21 +17,21 @@ let initialState = new InitialState();
 
 function status(state=initialState.status, action={}) {
   switch (action.type) {
-    case USER_REGISTER_CLEANUP:
-    case USER_REGISTER_FORMFIELD_CHANGE: {
+    case REGISTER_CLEANUP:
+    case REGISTER_FORMFIELD_CHANGE: {
       return state.setIn(['error'], null);
     }
 
-    case USER_REGISTER_REQUEST_START: {
+    case REGISTER_REQUEST_START: {
       return state.setIn(['isFetching'], true)
                   .setIn(['error'], null);
     }
 
-    case USER_REGISTER_REQUEST_SUCCESS:{
+    case REGISTER_REQUEST_SUCCESS:{
       return state.setIn(['isFetching'], false);
     }
 
-    case USER_REGISTER_REQUEST_FAILURE:{
+    case REGISTER_REQUEST_FAILURE:{
       return state.setIn(['isFetching'], false)
                   .setIn(['error'], action.payload);
     }
@@ -43,7 +43,7 @@ function status(state=initialState.status, action={}) {
 
 function fields(state=initialState.fields, action={}) {
   switch (action.type) {
-    case USER_REGISTER_FORMFIELD_CHANGE: {
+    case REGISTER_FORMFIELD_CHANGE: {
       const {field, value} = action.payload;
       let nextState =  state.setIn([field], value);
       return fieldValidation(nextState, action);
