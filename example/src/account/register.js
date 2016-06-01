@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import ReactNative, {View} from 'react-native';
+import ReactNative, {View, Alert} from 'react-native';
 
 import * as MaxLogin from 'maxlogin-react-native';
 import { Actions } from 'react-native-router-flux';
@@ -14,7 +14,8 @@ export default class Register extends Component {
         <MaxLogin.Register
           style={styles.account}
           onSuccess={user=>Actions.dismiss()}
-          onFailure={err=>console.log(err)}
+          onFailure={err=>Alert.alert('Error', err.message)}
+          displayPasswordCheckbox={true}
           />
       </View>
     );
