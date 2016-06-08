@@ -20,7 +20,6 @@ let styles = {
   }
 };
 
-console.log(stylesheet);
 styles.account.formStyle.helpBlock.normal.backgroundColor = '#007F00';
 styles.account.formStyle.helpBlock.normal.borderColor = '#007F00';
 

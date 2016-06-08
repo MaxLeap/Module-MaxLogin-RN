@@ -24,7 +24,12 @@ let fields = new Record({
  */
 const Form = Record({
   status: status,
-  fields: fields
+  fields: fields,
+  testIsValid: form=>{
+    let usernameValid = form.fields.username !== '' && !form.fields.usernameError
+    let pwdValid = form.fields.password !== '' && !form.fields.passwordError
+    return (usernameValid && pwdValid)
+  }
 });
 
 export default Form;

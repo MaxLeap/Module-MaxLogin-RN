@@ -20,7 +20,12 @@ let fields = new Record({
 
 const Form = Record({
   status,
-  fields
+  fields,
+  testIsValid: form => {
+    let phoneValid = form.fields.phoneNumber !== '' && form.fields.phoneNumberIsValid
+    let smscodeValid = form.fields.smscode !== '' && form.fields.smscodeIsValid
+    return (phoneValid && smscodeValid)
+  }
 });
 
 export default Form;

@@ -27,6 +27,9 @@ export default function main(platform) {
 
   class example extends Component {
     render() {
+      MaxLeap.User.currentAsync().then(value => {
+        console.log(value);
+      })
       return (
         <Provider store={store}>
           <Launcher />
