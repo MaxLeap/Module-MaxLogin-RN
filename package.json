@@ -1,6 +1,6 @@
 {
   "name": "maxlogin-react-native",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "The login UI based on MaxLeap SDK",
   "main": "index.js",
   "scripts": {
