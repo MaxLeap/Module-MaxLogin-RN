@@ -42,10 +42,11 @@ export default class Register extends Component {
   _onButtonPress(e) {
     let username = this.props.form.fields.username;
     let password = this.props.form.fields.password;
-    this.props.actions.register({
+    let handler = this.props.onSubmit || this.props.actions.register
+    handler({
       username,
       password,
-      onSuccess:this.props.onRegister,
+      onSuccess:this.props.onSuccess,
       onFailure:this.props.onFailure
     });
   }
@@ -80,6 +81,7 @@ export default class Register extends Component {
 Register.propTypes = {
   displayPasswordCheckbox: PropTypes.bool,
   onSuccess: PropTypes.func,
+  onSubmit: PropTypes.func,
   onFailure: PropTypes.func
 };
 

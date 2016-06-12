@@ -45,7 +45,8 @@ export default class Login extends Component {
   _onButtonPress(e) {
     let username = this.props.form.fields.username;
     let password = this.props.form.fields.password;
-    this.props.actions.login({
+    let handler = this.props.onSubmit || this.props.actions.login
+    handler({
       username,
       password,
       onSuccess: this.props.onSuccess,
@@ -83,7 +84,8 @@ export default class Login extends Component {
 Login.propTypes = {
   displayPasswordCheckbox: PropTypes.bool,
   onSuccess: PropTypes.func,
-  onFailure: PropTypes.func
+  onFailure: PropTypes.func,
+  onSubmit: PropTypes.func
 };
 
 function mapStateToProps(state) {

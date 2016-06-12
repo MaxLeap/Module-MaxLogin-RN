@@ -50,7 +50,8 @@ export default class PhoneLogin extends Component {
     if (this._alertPhoneNumber() && this._alertSmscode()) {
       let phoneNumber = this.props.form.fields.phoneNumber;
       let smscode = this.props.form.fields.smscode;
-      this.props.actions.login({
+      let handler = this.props.onSubmit || this.props.actions.login
+      handler({
         phoneNumber,
         smscode,
         onSuccess: this.props.onSuccess,
@@ -133,6 +134,7 @@ PhoneLogin.propTypes = {
   onSmsRequestFailure: PropTypes.func,
   onSuccess: PropTypes.func,
   onFailure: PropTypes.func,
+  onSubmit: PropTypes.func,
   waitSeconds: PropTypes.number // default is 60s
 };
 
