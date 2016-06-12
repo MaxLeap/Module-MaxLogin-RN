@@ -13,7 +13,7 @@ export default class Register extends Component {
       <View style={styles.container}>
         <MaxLogin.Register
           style={styles.account}
-          onSuccess={user=>Actions.dismiss()}
+          onSuccess={user=>Actions.launch()}
           onFailure={err=>Alert.alert('Error', err.message)}
           displayPasswordCheckbox={true}
           />
