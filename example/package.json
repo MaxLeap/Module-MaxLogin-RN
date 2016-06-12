@@ -8,7 +8,7 @@
   "dependencies": {
     "apsl-react-native-button": "^2.5.0",
     "immutable": "^3.8.1",
-    "maxleap-react-native": "0.0.8",
+    "maxleap-react-native": "file:../../MaxLeap-SDK",
     "maxlogin-react-native": "file:../",
     "react": "15.0.2",
     "react-native": "^0.26.1",
