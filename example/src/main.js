@@ -11,11 +11,11 @@ import {AppRegistry} from 'react-native';
 import { Provider } from 'react-redux';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+
 import * as MaxLogin from 'maxlogin-react-native';
 import Launcher from './launcher';
 import MaxLeap from 'maxleap-react-native';
 
-MaxLeap.useCNServer();
 
 export default function main(platform) {
 
@@ -27,12 +27,6 @@ export default function main(platform) {
 
   class example extends Component {
     render() {
-      MaxLeap.User.currentAsync().then(user => {
-        store.dispatch(MaxLogin.setCurrentUser(user))
-        console.log(store.getState());
-      }).catch(err => {
-        console.log(err);
-      })
       return (
         <Provider store={store}>
           <Launcher />
@@ -40,6 +34,23 @@ export default function main(platform) {
       );
     }
   }
+
+  function isAnonymous(user) {
+    let authData = user.get('authData')
+    let anonymous = authData && authData['anonymous']
+    let aid = anonymous && anonymous['id']
+    return aid !== undefined
+  }
+
+  // 获取本地缓存的用户
+  MaxLeap.User.currentAsync().then(user => {
+    if (user && !isAnonymous(user)) {
+      // 自动登录
+      store.dispatch(MaxLogin.setCurrentUser(user))
+    }
+  }).catch(err => {
+    console.log(err);
+  })
 
   AppRegistry.registerComponent('example', () => example);
 }
