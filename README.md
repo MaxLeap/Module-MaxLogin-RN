@@ -100,9 +100,9 @@ onSubmit  | `function` |  | 处理表单按钮点击事件，如果不为空，�
 onSuccess | `function` |  | 登录成功的回调<br>参数：`user` 登录成功的用户对象
 onFailure | `function` |  | 登录失败的回调<br>参数：`error` 请求错误
 onSubmit  | `function` |  | 处理表单按钮点击事件，如果不为空，则内置处理器不会再响应，也就是不会再走内置登录流程
-waitSeconds ｜ `number` |  | 获取验证码按钮的冷却时间，冷却期间，按钮不可点击
+waitSeconds | `number` |60| 获取验证码按钮的冷却时间，冷却期间，按钮不可点击, **单位：秒**
 onSmsRequestSuccess | `function` | | 验证码请求成功的回调
-onSmsRequestFailure ｜ `function` | | 验证码请求失败的回调<br>参数：`error` 请求错误
+onSmsRequestFailure | `function` | | 验证码请求失败的回调<br>参数：`error` 请求错误
 
 ### 示例
 
