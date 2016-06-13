@@ -82,7 +82,6 @@ export default class Login extends Component {
 }
 
 Login.propTypes = {
-  displayPasswordCheckbox: PropTypes.bool,
   onSuccess: PropTypes.func,
   onFailure: PropTypes.func,
   onSubmit: PropTypes.func

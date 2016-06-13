@@ -129,7 +129,6 @@ export default class PhoneLogin extends Component {
 }
 
 PhoneLogin.propTypes = {
-  displayPasswordCheckbox: PropTypes.bool,
   onSmsRequestSuccess: PropTypes.func,
   onSmsRequestFailure: PropTypes.func,
   onSuccess: PropTypes.func,

@@ -79,7 +79,6 @@ export default class Register extends Component {
 }
 
 Register.propTypes = {
-  displayPasswordCheckbox: PropTypes.bool,
   onSuccess: PropTypes.func,
   onSubmit: PropTypes.func,
   onFailure: PropTypes.func

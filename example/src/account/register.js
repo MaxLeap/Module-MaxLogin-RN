@@ -15,7 +15,6 @@ export default class Register extends Component {
           style={styles.account}
           onSuccess={user=>Actions.launch()}
           onFailure={err=>Alert.alert('Error', err.message)}
-          displayPasswordCheckbox={true}
           />
       </View>
     );
