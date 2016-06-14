@@ -11,8 +11,6 @@
     "login",
     "account system"
   ],
-  "author": "MaxLeap",
-  "license": "ISC",
   "dependencies": {
     "apsl-react-native-button": "^2.5.0",
     "immutable": "^3.8.1",
@@ -31,5 +29,11 @@
   "jshintConfig": {
     "esversion": 6,
     "strict": "global"
-  }
+  },
+  "author": "MaxLeap",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaxLeap/Module-MaxLogin-RN/issues"
+  },
+  "homepage": "https://github.com/MaxLeap/Module-MaxLogin-RN"
 }
