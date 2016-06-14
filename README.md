@@ -13,11 +13,11 @@
 
 ### 安装
 
-1. **重要：**先安装 `maxleap-react-native`, 参照 [MaxLeap 开发文档](http://badge.fury.io/js/maxleap-react-native)
+1. **重要：**先安装 `maxleap-react-native`, 参照 [MaxLeap RN 开发文档](http://badge.fury.io/js/maxleap-react-native)
 
 2. 安装 `maxlogin-react-native`
 
-	```
+	```bash
 	npm install --save maxlogin-react-native
 	```
 
@@ -27,7 +27,7 @@
 
 导入本模块：
 
-```
+```js
 import * as MaxLogin from 'maxlogin-react-native';
 ```
 
@@ -37,7 +37,7 @@ import * as MaxLogin from 'maxlogin-react-native';
 
 一个 `immutable` 的 [`Record`](http://facebook.github.io/immutable-js/docs/#/Record) 对象，使用时需要把它的一个实例放到整个应用程序的 initialState 的顶层，并且字段名**必须**是 `maxlogin`： 
 
-```
+```js
 const initState = {
   maxlogin: new MaxLogin.InitialState()
 };
@@ -49,7 +49,7 @@ const initState = {
 
 此模块中的 reducers, 需要合并到 RootReducer 中:
 
-```
+```js
 import { combineReducers } from 'redux';
 
 const rootReducers = combineReducers({
@@ -64,7 +64,7 @@ const rootReducers = combineReducers({
 
 **注意：**这是一个 Action, 直接调用不能达到期望的效果, 使用方法如下： 
 
-```
+```js
 // 创建 store 对象
 const store = createStore(rootReducers, initState, applyMiddleware(thunk));
 
