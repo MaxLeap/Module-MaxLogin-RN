@@ -42,7 +42,6 @@ inputs: Text.propTypes.style
 */
 export default class PhoneLogin extends Component {
   componentWillUnmount() {
-    this._stopCounter();
     this.props.actions.cleanup();
   }
 
@@ -88,30 +87,16 @@ export default class PhoneLogin extends Component {
     return true;
   }
 
-  _stopCounter() {
-    if (this.timer) {
-      clearInterval(this.timer);
-      this.timer = null;
-      this.props.actions.counterStop();
-    }
-  }
-
   _onFieldAccessoryPress(path) {
     if (this._alertPhoneNumber() && path && path[0] === 'smscode') {
       // gain passcode
-      this.props.actions.reqeustSmsCode({
-        phoneNumber: this.props.form.fields.phoneNumber,
-        onSuccess: this.props.onSmsRequestSuccess,
-        onFailure: this.props.onSmsRequestFailure
-      });
+      // this.props.actions.reqeustSmsCode({
+      //   phoneNumber: this.props.form.fields.phoneNumber,
+      //   onSuccess: this.props.onSmsRequestSuccess,
+      //   onFailure: this.props.onSmsRequestFailure
+      // });
       let waitSeconds = this.props.waitSeconds || DEFAULT_WAIT_TIME;
-      this.props.actions.counterStart(waitSeconds);
-      this.timer = setInterval(()=>{
-        this.props.actions.countdown(1);
-        if (this.props.form.fields.countValue <= 0) {
-          this._stopCounter();
-        }
-      }, 1000);
+      this.props.actions.startCountDown(waitSeconds, 1)
     }
   }
 

@@ -20,6 +20,8 @@ const {
   PHONE_LOGIN_FORMFIELD_CHANGE
 } = Actions;
 
+const DEFAULT_WAIT_TIME = 60
+
 function smsRequestStart() {
   return {
     type: SMSCODE_REQUEST_START
@@ -75,24 +77,44 @@ export function reqeustSmsCode({phoneNumber, onSuccess, onFailure}) {
   };
 }
 
-export function counterStart(value) {
+function counterStart(value) {
   return {
     type: SMSCODE_COUNTDOWN_START,
     value
   };
 }
 
-export function countdown(decrement) {
+function countdown(decrement) {
   return {
     type: SMSCODE_COUNTDOWN,
     decrement
   };
 }
 
-export function counterStop() {
+function counterStop() {
   return {
     type: SMSCODE_COUNTDOWN_END
   };
+}
+
+let smscodeCountdownTimer = null
+let waitSeconds = DEFAULT_WAIT_TIME
+
+export function startCountDown(total, decrement) {
+  return dispatch => {
+    if (smscodeCountdownTimer) return
+
+    waitSeconds = total || DEFAULT_WAIT_TIME
+    dispatch(counterStart(waitSeconds))
+    smscodeCountdownTimer = setInterval(() => {
+      dispatch(countdown(decrement || 1))
+      if (--waitSeconds <= 0) {
+        clearInterval(smscodeCountdownTimer);
+        smscodeCountdownTimer = null
+        dispatch(counterStop())
+      }
+    }, 1000);
+  }
 }
 
 /**
