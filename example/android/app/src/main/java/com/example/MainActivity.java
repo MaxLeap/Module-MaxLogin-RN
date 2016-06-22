@@ -1,14 +1,19 @@
 package com.example;
 
+import android.os.Bundle;
+
 import com.facebook.react.ReactActivity;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
+import com.maxleap.reactnative.MaxLeap;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends ReactActivity {
+
+    private MaxLeap maxLeap;
 
     /**
      * Returns the name of the main component registered from JavaScript.
@@ -28,6 +33,13 @@ public class MainActivity extends ReactActivity {
         return BuildConfig.DEBUG;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // 确保在 super.onCreate() 之前调用以下代码
+        maxLeap = new MaxLeap(this, "56b01ed8169e7d0001975c2a", "WWxDbFIxblNIVGIwQmcxREhuUnFNUQ");
+        super.onCreate(savedInstanceState);
+    }
+
     /**
      * A list of packages used by the app. If the app uses additional views
      * or modules besides the default ones, add more packages here.
@@ -36,7 +48,8 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
-            new VectorIconsPackage()
+            new VectorIconsPackage(),
+                maxLeap.getReactPackage()
         );
     }
 }

@@ -51,14 +51,14 @@ export default {
       color: LABEL_COLOR,
       fontSize: FONT_SIZE,
       marginRight: 7,
-      width: 51
+      width: 60
     },
     // the style applied when a validation error occours
     error: {
       color: LABEL_COLOR,
       fontSize: FONT_SIZE,
       marginRight: 7,
-      width: 51
+      width: 60
     }
   },
   textbox: {
